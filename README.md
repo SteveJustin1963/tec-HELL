@@ -3,7 +3,7 @@ TEC-1 Hellschreiber
 
 ![](https://github.com/SteveJustin1963/tec-HELL/blob/master/pics/350px-Feldhell.jpg)
 
-![]()
+![](https://github.com/SteveJustin1963/tec-HELL/blob/master/pics/300px-Hellschreiber-schriftbild.gif)
 
 - a tec1 controlled Hell tx and rx and printer/display system
 - tx/rx from MINT keypad or Hex pad 
