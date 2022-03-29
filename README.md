@@ -1,7 +1,7 @@
 # tec-HELL
 TEC-1 Hellschreiber
 
-![](https://en.wikipedia.org/wiki/File:Feldhell.jpg)
+![](https://en.wikipedia.org/wiki/Hellschreiber#/media/File:Hellschreiber-schriftbild.gif)
 
 - a tec1 controlled Hell tx and rx and printer/display system
 - tx/rx from MINT keypad or Hex pad 
