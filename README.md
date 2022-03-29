@@ -1,7 +1,7 @@
 # tec-HELL
 TEC-1 Hellschreiber
 
-![]()
+![](https://github.com/SteveJustin1963/tec-HELL/blob/master/pics/350px-Feldhell.jpg)
 
 ![]()
 
