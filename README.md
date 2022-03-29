@@ -7,7 +7,7 @@ TEC-1 Hellschreiber
 
 - a tec1 controlled Hell tx and rx and printer/display system
 - tx/rx from MINT keypad or Hex pad 
-- display on 7seg or LCD matrix
+- display on 7seg or LCD matrix or paper tape
 - backup transmission to audio tape to print later to thermal pos printer
 
 
