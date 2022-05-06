@@ -31,4 +31,8 @@ from wiki;
 ## Ref
 - https://en.wikipedia.org/wiki/Hellschreiber
 - https://www.nonstopsystems.com/radio/hellschreiber-homebuilt.htm
+- https://www.instructables.com/Hellschreiber-Clock/
+- https://swharden.com/blog/2011-08-05-i-before-e-except-after-hellschreiber/
+- 
+- 
 
