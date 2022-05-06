@@ -9,6 +9,17 @@ What are the disadvantages of Hellschreiber? One disadvantage of Hellschreiber i
 
 ![](https://github.com/SteveJustin1963/tec-HELL/blob/master/pics/300px-Hellschreiber-schriftbild.gif)
 
+### Hellschreiber variants
+
+from wiki;
+- PSK Hell encodes a pixel's brightness in the carrier phase instead of the amplitude. it's encoded in the change of the phase (differential phase shift keying): an unchanged phase in the beginning of a pixel means white, and a reversed phase means black. It operates at 105 or 245 baud.
+- FM Hell (or FSK Hell) uses frequency modulation with a careful control of phase, essentially minimum-shift keying. The most common variant is FSK Hell-105.
+- Duplo Hell is a dual tone mode which sends two columns at a time at different frequencies (980 Hz and 1225/1470 Hz).
+- C/MT Hell or concurrent multitone Hell sends all rows at the same time using tones at different frequencies. The transmission can be read using an FFT display. It allows for high resolutions.
+- S/MT Hell or sequential multitone Hell is like C/MT but it sends only one tone (for one row) at a time. As a result, characters received have a bit of slant, they look like an oblique font. This is similar to a Hellschreiber using a mechanical font.
+- Slowfeld, experimental narrow band Hellschreiber principle – transmitter / receiver use the same column-scan speed. Data is sent at a very slow rate and received via a Fast Fourier Transform routine giving a bandwidth of several Hz. As long as tuning is within several signal bandwidths, the result will appear. The transmission rate is around 3, 1.5 and 0.75 characters per second. Slowfeld, along with similar modes such as very slow QRSS Morse code, may be used when all other communication methods fail.
+- 
+
 ### Project
 
 - a tec1 controlled Hell tx and rx and printer/display system
