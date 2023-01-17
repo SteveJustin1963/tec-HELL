@@ -1,6 +1,5 @@
-# tec-HELL
-TEC-1 Hellschreiber
-
+# TEC-1 Hellschreiber 
+...see wiki
 
 Hellschreiber is a machine-readable teleprinter code that was used in the early days of telecommunications.  
 
