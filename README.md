@@ -7,6 +7,8 @@ Hellschreiber is a machine-readable teleprinter communication that uses a combin
 
 ![](https://github.com/SteveJustin1963/tec-HELL/raw/master/pics/300px-Hellschreiber-schriftbild.gif)
 
+![image](https://user-images.githubusercontent.com/58069246/213037768-53a5574c-3fd0-4efa-a273-16e327fc0925.png)
+
 
 ##  Project
 - build the printer mechanism, the core
