@@ -6,6 +6,7 @@ Hellschreiber is a machine-readable teleprinter code that was used in the early 
 
 ![](https://github.com/SteveJustin1963/tec-HELL/blob/master/pics/350px-Feldhell.jpg)
 
+https://github.com/SteveJustin1963/tec-HELL/raw/master/pics/300px-Hellschreiber-schriftbild.gif
 
 
 ##  Project
