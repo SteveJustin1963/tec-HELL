@@ -54,3 +54,20 @@ void convert_and_send(char* message, int message_len){
     }
 }
 \\\\\\\\\\\\\\\\
+
+basic
+10 INPUT "Enter a message to be sent using Hellschreiber: "; M$
+20 FOR I = 1 TO LEN(M$)
+30   ASCII = ASC(M$(I))
+40   FOR J = 0 TO 7
+50     FOR K = 0 TO 7
+60       DOT = (ASCII AND (2^(J*8+K))) / (2^(J*8+K))
+70       IF DOT = 1 THEN PRINT ".";
+80       IF DOT = 0 THEN PRINT " ";
+90     NEXT K
+100   NEXT J
+110 NEXT I
+
+\\\\\\\\\\\\\\
+
+
