@@ -51,3 +51,14 @@ This C code defines a function called "convert_and_send" that takes a char point
 The innermost for loop uses bitwise AND operator to check if the current bit of the ASCII code is 1 or 0. If the bit is 1, it prints a dot "." using the printf function and if the bit is 0 it prints a blank " " using the printf function
 
 
+## basic
+This program prompts the user to enter a message to be sent using Hellschreiber, and stores the message in a string variable "M$".
+
+The program then enters a for loop that iterates through each character in the input message, using the for loop. For each character, it retrieves the ASCII code of the character by calling the ASC function. Then it enters two nested for loops, one for the rows and one for the columns of the 8x8 matrix, so that it can access each bit of the ASCII code.
+
+The innermost for loop uses bitwise AND operator to check if the current bit of the ASCII code is 1 or 0. If the bit is 1, it prints a dot "." and if the bit is 0 it prints a blank " ".
+
+After the innermost for loop, it goes to the next line to start printing the next row of the 8x8 matrix, this way it simulates the sending of the message line by line like Helscriber.
+Please note that this is a very basic version of the Basic programming language, specific implementation details might vary depending on the specific Basic interpreter you use.
+
+
