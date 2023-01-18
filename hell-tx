@@ -1,0 +1,56 @@
+
+
+PROCEDURE convert_and_send(message: STRING)
+BEGIN
+    FOR i = 0 to length(message) - 1
+        ascii_code = ASCII(message[i])
+        FOR j = 0 to 7
+            FOR k = 0 to 7
+                dot = (ascii_code AND (1 << (j*8+k))) >> (j*8+k)
+                IF dot = 1 THEN
+                    Print "."
+                ELSE
+                    Print " "
+                END IF
+            END FOR
+        PRINT ""
+        END FOR
+    END FOR
+END PROCEDURE
+
+\\\\\\\\\\\\\\
+forth
+: convert-and-send ( message-addr message-len -- )
+   0 DO
+      i c@ ascii
+      8 0 DO
+         j 8 * 8 + k =
+         ascii and j = IF ." ." ELSE ." " THEN
+      LOOP
+   CR
+   LOOP
+;
+\\\\\\\\\\\\\\\\
+
+; c
+
+#include <stdio.h>
+
+void convert_and_send(char* message, int message_len){
+    int i, j, k, ascii_code, dot;
+    for (i = 0; i < message_len; i++) {
+        ascii_code = (int) message[i];
+        for (j = 0; j < 8; j++) {
+            for (k = 0; k < 8; k++) {
+                dot = (ascii_code & (1 << (j * 8 + k))) >> (j * 8 + k);
+                if (dot == 1) {
+                    printf(".");
+                } else {
+                    printf(" ");
+                }
+            }
+            printf("\n");
+        }
+    }
+}
+\\\\\\\\\\\\\\\\
