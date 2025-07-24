@@ -62,3 +62,7 @@ After the innermost for loop, it goes to the next line to start printing the nex
 Please note that this is a very basic version of the Basic programming language, specific implementation details might vary depending on the specific Basic interpreter you use.
 
 
+# 24-7-2025
+
+- https://github.com/SteveJustin1963/tec-HELL/wiki/convert-HellZX%E2%80%90Decoder%E2%80%90ASM.Z80-to-MINT-code#adapt-code-to-decode-and-display-to-mint-ascii-terminal 
+
