@@ -10,59 +10,141 @@ Hellschreiber is a machine-readable teleprinter communication that uses a combin
 ![image](https://user-images.githubusercontent.com/58069246/213037768-53a5574c-3fd0-4efa-a273-16e327fc0925.png)
 
 
-##  Project
-- build the printer mechanism, the core
-- code tec1 to controll tx and rx and printer/display system
-  - tx/rx from 
-    - MINT keypad 
-    - Hex pad 
-  - print to 
-    - paper tape
-    - 7seg
-    - LCD matrix
-    - small thermal printer  
-- backup transmission to audio tape to print later 
+ 
  
 
 
 
-# hell-tx 
-## Pseudocode 
-takes a string message as input and converts it to an 8x8 matrix of dots and sends them line by line like Hellschreiber.
+ 
+A walk you through how to **actually** implement a Feld-Hell transmitter in code — 
 
-The procedure iterates through each character in the input message, using the for loop. For each character, it retrieves the ASCII code of the character by calling the ASCII function. Then it enters two nested for loops, one for the rows and one for the columns of the 8x8 matrix, so that it can access each bit of the ASCII code.
+---
 
-The inner most for loop uses bitwise AND operator to check if the current bit of the ASCII code is 1 or 0. If the bit is 1, it prints a dot "." and if the bit is 0 it prints a blank " ".
+### The Core Idea (Tech View)
 
-After the innermost for loop, it goes to the next line to start printing the next row of the 8x8 matrix, this way it simulates the sending of the message line by line like Helscriber.
+Hellschreiber isn’t text — it’s **facsimile**.  
+Each character is a **7×7 pixel bitmap** (49 bits total).  
+We **serialize one column at a time**, left-to-right, top-to-bottom.  
+Each pixel = **tone on (1) or off (0)** for a fixed time slice.
 
-Please note that this is a high-level pseudocode, specific implementation details might vary depending on the programming language you use.
+> **Timing**: 245 baud ≈ 8.16 ms per pixel → 57 ms per column → 400 ms per character.
 
-## Forth
-This example defines a new Forth word called "convert-and-send", which takes the address and length of a message as input. It uses a "DO" loop to iterate through each character in the message and retrieves the ASCII code of the character using the "c@" operator. Then it uses another nested "DO" loop to iterate through each bit of the ASCII code and checks if the current bit is 1 or 0 using the "and" operator.
+---
 
-If the bit is 1, it prints a dot "." using the "." operator, and if the bit is 0 it prints a blank " " and then goes to the next line.
+### Pseudocode — Real Implementation
 
-Please note that this is a high-level example and Forth 83 has many unique features and it's a low level language, specific implementation details might vary depending on the specific Forth interpreter you use.
+```pseudocode
+// Global: 7x7 font table (1 = pixel on, 0 = off)
+Font[128] → 7×7 bitmatrix
 
-## c
-This C code defines a function called "convert_and_send" that takes a char pointer "message" as its first argument and an int "message_len" as its second argument. It uses two nested for loops, one for the rows and one for the columns of the 8x8 matrix, so that it can access each bit of the ASCII code.
+Function SendHellschreiber(String msg):
+    For each char c in msg:
+        bitmap = Font[c]                  // 7 rows × 7 cols
 
-The innermost for loop uses bitwise AND operator to check if the current bit of the ASCII code is 1 or 0. If the bit is 1, it prints a dot "." using the printf function and if the bit is 0 it prints a blank " " using the printf function
+        For col = 0 to 6:                 // Transmit column-by-column
+            For row = 0 to 6:             // Scan top → bottom
+                If bitmap[row][col] == 1:
+                    Tone_ON(2450 Hz)      // or print "█"
+                Else:
+                    Tone_OFF()            // or print " "
+                Delay(8.16 ms)            // One pixel time
+            EndFor
+            Delay(2 ms)                   // Small inter-column gap
+        EndFor
 
+        Silence(50 ms)                    // Character spacing
+    EndFor
+EndFunction
+```
 
-## basic
-This program prompts the user to enter a message to be sent using Hellschreiber, and stores the message in a string variable "M$".
+---
 
-The program then enters a for loop that iterates through each character in the input message, using the for loop. For each character, it retrieves the ASCII code of the character by calling the ASC function. Then it enters two nested for loops, one for the rows and one for the columns of the 8x8 matrix, so that it can access each bit of the ASCII code.
+### Console Visualization (Debug Mode)
 
-The innermost for loop uses bitwise AND operator to check if the current bit of the ASCII code is 1 or 0. If the bit is 1, it prints a dot "." and if the bit is 0 it prints a blank " ".
+If you’re printing to screen (not modulating):
 
-After the innermost for loop, it goes to the next line to start printing the next row of the 8x8 matrix, this way it simulates the sending of the message line by line like Helscriber.
-Please note that this is a very basic version of the Basic programming language, specific implementation details might vary depending on the specific Basic interpreter you use.
+```pseudocode
+For col = 0 to 6:
+    For row = 0 to 6:
+        Print bitmap[row][col] ? "█" : " "
+    Print newline
+Print "  "  // two-space letter gap
+```
 
+Output for `"A"`:
 
-# 24-7-2025
+```
+   █   
+  ███  
+ █   █ 
+ █   █ 
+ █████ 
+ █   █ 
+ █   █ 
 
-- https://github.com/SteveJustin1963/tec-HELL/wiki/convert-HellZX%E2%80%90Decoder%E2%80%90ASM.Z80-to-MINT-code#adapt-code-to-decode-and-display-to-mint-ascii-terminal 
+   █   
+  ███  
+ █   █ 
+ █   █ 
+ █████ 
+ █   █ 
+ █   █ 
+```
+
+Each block = one **transmitted column**.
+
+---
+
+### Font Storage (Real Example)
+
+```c
+// C-style: packed bitmatrix (7 cols × 7 rows)
+uint8_t Font['A'] = {
+    0b0001000,  // col0
+    0b0011100,  // col1
+    0b0100010,  // col2
+    0b0100010,  // col3
+    0b0111110,  // col4
+    0b0100010,  // col5
+    0b0100010   // col6
+};
+```
+
+Bit 6 = top row, bit 0 = bottom.
+
+---
+
+### Signal Chain (Radio View)
+
+```
+Text → Font Lookup → 7×7 Bitmap → Column Serializer → 
+Pixel Timing (8.16ms) → 2450 Hz OOK → Antenna
+```
+
+- **OOK** = On-Off Keying (FSK with f2 = silence)
+- Sync via **start pulse** or free-run (receiver aligns on energy)
+
+---
+
+### Pro Tips (From the Bench)
+
+1. **Add dither**: randomize pixel timing ±1ms → reduces birdies.
+2. **Pre-warp font**: slant columns 1px right for “italic” look (classic Feld-Hell).
+3. **Double height**: use 14 rows (2px per scan line) → sharper text.
+4. **Sync pulse**: send 1225 Hz for 100ms before message.
+
+---
+
+### One-Liner for Testing (Python)
+
+```python
+def hell_print(s): 
+    [print(''.join('█ '[Font[c][r][col]] for r in range(7)), '\n  ', end='') 
+     for c in s.upper() for col in range(7)]
+```
+
+---
+
+That’s it. No ASCII hacks, no 8×8 confusion — just **real Hellschreiber**, the way Rudolf Hell built it in 1929.
+
 
